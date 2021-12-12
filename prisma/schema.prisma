@@ -15,9 +15,9 @@ model User {
   username       String       @unique
   email          String       @unique
   name           String
-  location       String
-  avatarURL      String
-  githubUsername String
+  location       String?
+  avatarURL      String?
+  githubUsername String?
   password       String
   followers      User[]       @relation("FollowRelation", references: [id])
   following      User[]       @relation("FollowRelation", references: [id])
