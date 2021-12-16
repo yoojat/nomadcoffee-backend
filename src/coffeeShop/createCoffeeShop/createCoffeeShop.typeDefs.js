@@ -11,6 +11,7 @@ export default gql`
   type Mutation {
     createCoffeeShop(
       name: String!
+      address: String!
       latitude: String!
       longitude: String!
       photoFiles: [Upload]!

@@ -51,6 +51,8 @@ model CoffeeShop {
   name      String
   latitude  String
   longitude String
+  address   String
+  caption   String
   categorys Category[]
   photos    CoffeeShopPhoto[]
   createdAt DateTime          @default(now())

@@ -5,7 +5,7 @@ export default {
   Mutation: {
     editCoffeeShop: async (
       _,
-      { id, name, latitude, longitude, photos, caption },
+      { id, name, address, latitude, longitude, photos, caption },
       { loggedInUser }
     ) => {
       try {
@@ -51,8 +51,10 @@ export default {
           },
           data: {
             name,
+            address,
             latitude,
             longitude,
+            caption,
             user: {
               connect: {
                 id: loggedInUser.id,

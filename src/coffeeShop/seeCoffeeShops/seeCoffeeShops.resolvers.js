@@ -7,6 +7,7 @@ export default {
         const coffeeShops = await client.coffeeShop.findMany({
           skip: (page - 1) * 5,
           take: 5,
+          include: { photos: true },
         });
         return {
           ok: true,

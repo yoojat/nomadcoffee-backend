@@ -8,10 +8,11 @@ export default gql`
   type Mutation {
     editCoffeeShop(
       id: Int!
-      name: String!
+      name: String
+      address: String
       latitude: String
       longitude: String
-      photos: [String]
+      photoFiles: [String]
       caption: String
     ): EditCoffeeShopResult!
   }

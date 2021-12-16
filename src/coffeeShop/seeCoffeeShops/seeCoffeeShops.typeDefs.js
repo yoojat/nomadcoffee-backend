@@ -7,6 +7,6 @@ export default gql`
     coffeeShops: [CoffeeShop]
   }
   type Query {
-    seeCoffeeShops: SeeCoffeeShopsResult!
+    seeCoffeeShops(page: Int!): SeeCoffeeShopsResult!
   }
 `;
