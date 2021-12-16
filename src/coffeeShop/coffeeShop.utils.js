@@ -7,7 +7,6 @@ export const processCategories = (caption) => {
 };
 
 export const processPhotoUrls = (photoUrls) => {
-  console.log({ photoUrls });
   return photoUrls.map((photoUrl) => ({
     where: { url: photoUrl },
     create: { url: photoUrl },

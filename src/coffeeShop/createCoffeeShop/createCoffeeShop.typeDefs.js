@@ -1,6 +1,8 @@
 import { gql } from 'apollo-server';
 
 export default gql`
+  scalar Upload
+
   type CreateCoffeeShoptResult {
     ok: Boolean!
     error: String
@@ -9,10 +11,10 @@ export default gql`
   type Mutation {
     createCoffeeShop(
       name: String!
-      latitude: String
-      longitude: String
-      photoUrls: [String]
-      caption: String
+      latitude: String!
+      longitude: String!
+      photoFiles: [Upload]!
+      caption: String!
     ): CreateCoffeeShoptResult
   }
 `;
