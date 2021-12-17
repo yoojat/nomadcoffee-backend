@@ -1,5 +1,5 @@
 import { GraphQLUpload } from 'graphql-upload';
-import { uploadPhoto } from '../../../shared/shared.utils';
+import { uploadPhoto } from '../../shared/shared.utils';
 import client from '../../client';
 import { protectedResolver } from '../../utils';
 import { processCategories, processPhotoUrls } from '../coffeeShop.utils';

@@ -1,4 +1,5 @@
 import client from '../../client';
+import { uploadPhoto } from '../../shared/shared.utils';
 import { processCategories, processPhotoUrls } from '../coffeeShop.utils';
 
 export default {
