@@ -16,6 +16,7 @@ export default gql`
     user: User!
     photos: [CoffeeShopPhoto]
     categorys: [Category]
+    isMine: Boolean
   }
   type Category {
     id: Int

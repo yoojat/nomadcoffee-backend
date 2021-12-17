@@ -9,15 +9,15 @@ export default {
       { loggedInUser }
     ) => {
       try {
-        let categorys = [];
-        let photosForConnectOrCreate;
-        if (caption) {
-          categorys = processCategories(caption);
-        }
+        // let categorys = [];
+        // let photosForConnectOrCreate;
+        // if (caption) {
+        //   categorys = processCategories(caption);
+        // }
 
-        if (photos) {
-          photosForConnectOrCreate = processPhotoUrls(photos);
-        }
+        // if (photos) {
+        //   photosForConnectOrCreate = processPhotoUrls(photos);
+        // }
 
         const oldCoffeeShop = await client.coffeeShop.findFirst({
           where: {
@@ -45,6 +45,13 @@ export default {
           };
         }
 
+        const photoUrlPromises = photoFiles.map((photoFile) =>
+          uploadPhoto(photoFile, loggedInUser.id)
+        );
+        const categories = processCategories(caption);
+        const photoUrls = await Promise.all(photoUrlPromises);
+        const photos = processPhotoUrls(photoUrls);
+
         const coffeeShop = await client.coffeeShop.update({
           where: {
             id,
@@ -60,23 +67,23 @@ export default {
                 id: loggedInUser.id,
               },
             },
-            ...(photosForConnectOrCreate &&
-              photosForConnectOrCreate.length > 0 && {
-                photos: {
-                  connectOrCreate: photosForConnectOrCreate,
-                },
-              }),
+            ...(photoUrls.length > 0 && {
+              photos: {
+                disconnect: oldCoffeeShop.photos,
+                connectOrCreate: photos,
+              },
+            }),
 
-            ...(categorys.length > 0 && {
+            ...(categories.length > 0 && {
               categorys: {
                 disconnect: oldCoffeeShop.categorys,
-                connectOrCreate: categorys,
+                connectOrCreate: categories,
               },
             }),
           },
         });
 
-        if (photosForConnectOrCreate && photosForConnectOrCreate.length > 0) {
+        if (photos && photos.length > 0) {
           await client.coffeeShopPhoto.deleteMany({
             where: {
               OR: oldCoffeeShop.photos,

@@ -1,5 +1,5 @@
 export const processCategories = (caption) => {
-  const categories = caption.match(/#[\w]+/g) || [];
+  const categories = caption.match(/#[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|\w]+/g) || [];
   return categories.map((category) => ({
     where: { name: category },
     create: { name: category },

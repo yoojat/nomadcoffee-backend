@@ -12,7 +12,7 @@ export default gql`
       address: String
       latitude: String
       longitude: String
-      photoFiles: [String]
+      photoFiles: [Upload]
       caption: String
     ): EditCoffeeShopResult!
   }

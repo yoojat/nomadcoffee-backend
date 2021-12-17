@@ -14,80 +14,40 @@ export default {
         { loggedInUser }
       ) => {
         try {
-          let categories = [];
-          let photoUrls = [];
-          let photos;
-          let coffeeShop;
-          if (caption) {
-            categories = processCategories(caption);
-          }
-
-          const photoUrlPromises = photoFiles.map(
-            async (photoFile) => await uploadPhoto(photoFile, loggedInUser.id)
+          const photoUrlPromises = photoFiles.map((photoFile) =>
+            uploadPhoto(photoFile, loggedInUser.id)
           );
-          await Promise.all(photoUrlPromises)
-            .then(async (photoUrls) => {
-              photos = processPhotoUrls(photoUrls);
-              coffeeShop = await client.coffeeShop.create({
-                data: {
-                  name,
-                  latitude,
-                  longitude,
-                  address,
-                  caption,
-                  user: {
-                    connect: {
-                      id: loggedInUser.id,
-                    },
-                  },
-                  ...(photos.length > 0 && {
-                    photos: {
-                      connectOrCreate: photos,
-                    },
-                  }),
-                  ...(categories.length > 0 && {
-                    categorys: {
-                      connectOrCreate: categories,
-                    },
-                  }),
+          const categories = processCategories(caption);
+          const photoUrls = await Promise.all(photoUrlPromises);
+          const photos = processPhotoUrls(photoUrls);
+          const coffeeShop = await client.coffeeShop.create({
+            data: {
+              name,
+              latitude,
+              longitude,
+              address,
+              caption,
+              user: {
+                connect: {
+                  id: loggedInUser.id,
                 },
-              });
-            })
-            .then(() => {
-              return { ok: true, coffeeShop };
-            });
-
-          // console.log({ photoUrls });
-          // 사진 업로드 후 url생성
-          // if (photoUrls) {
-          // }
-          // console.log({ photos });
-          // const coffeeShop = await client.coffeeShop.create({
-          //   data: {
-          //     name,
-          //     latitude,
-          //     longitude,
-          //     user: {
-          //       connect: {
-          //         id: loggedInUser.id,
-          //       },
-          //     },
-          //     ...(photos.length > 0 && {
-          //       photos: {
-          //         connectOrCreate: photos,
-          //       },
-          //     }),
-          //     ...(categories.length > 0 && {
-          //       categorys: {
-          //         connectOrCreate: categories,
-          //       },
-          //     }),
-          //   },
-          // });
-          // return {
-          //   ok: true,
-          //   coffeeShop,
-          // };
+              },
+              ...(photoUrls.length > 0 && {
+                photos: {
+                  connectOrCreate: photos,
+                },
+              }),
+              ...(categories.length > 0 && {
+                categorys: {
+                  connectOrCreate: categories,
+                },
+              }),
+            },
+          });
+          return {
+            ok: true,
+            coffeeShop,
+          };
         } catch (error) {
           return {
             ok: false,
