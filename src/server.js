@@ -31,8 +31,10 @@ async function startServer() {
   // app.use(logger('tiny'));
   server.applyMiddleware({ app });
 
-  await new Promise((r) => app.listen({ port: 4000 }, r));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  await new Promise((r) => app.listen({ port: process.env.PORT || 5000 }, r));
+  console.log(
+    `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
+  );
 }
 
 startServer();
