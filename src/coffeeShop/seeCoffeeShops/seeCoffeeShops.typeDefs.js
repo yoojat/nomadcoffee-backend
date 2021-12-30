@@ -7,6 +7,6 @@ export default gql`
     coffeeShops: [CoffeeShop]
   }
   type Query {
-    seeCoffeeShops(lastId: Int): SeeCoffeeShopsResult!
+    seeCoffeeShops(offset: Int): SeeCoffeeShopsResult!
   }
 `;

@@ -33,7 +33,7 @@ async function startServer() {
 
   await new Promise((r) => app.listen({ port: process.env.PORT || 5000 }, r));
   console.log(
-    `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
+    `🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`
   );
 }
 
